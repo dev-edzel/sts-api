@@ -2,23 +2,28 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Models\User;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
-class AppServiceProvider extends ServiceProvider
+class AuthServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
+    protected $policies = [
+        User::class => [
+        ]
+    ];
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        //
+        $this->registerPolicies();
+
+        $policies = config('policies');
+
+        //TODO CHECK INDEX FOR BOTH "$key"
+        foreach ($policies as $key => $policy) {
+            foreach ($policy['permissions'] as $key => $permission) {
+                Gate::define($permission, [$policy['policy'], $key]);
+            }
+        }
     }
 }

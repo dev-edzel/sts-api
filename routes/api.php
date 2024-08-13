@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\SubCategoryController;
-use App\Http\Controllers\TicketTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    CategoryController,
+    SubCategoryController,
+    TicketTypeController
+};
 
 Route::get('/user', function (Request $request) {
     return $request->user();
