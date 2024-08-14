@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('category_id');
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('category_id')->references('id')->on('categories');
         });

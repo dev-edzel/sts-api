@@ -11,7 +11,7 @@ use Laravel\Scout\Searchable;
 
 class SubCategory extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'name',
@@ -21,7 +21,6 @@ class SubCategory extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     public function ticket(): HasOne

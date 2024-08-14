@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,20 +13,22 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
+        $search = $request->input('search');
+
+        $categories = Category::search($search)
+            ->query(fn($query) => $query->with('sub_categories'))
+            ->paginate(10);
+
         return $this->success(
-            'Searching Categories Successful',
-            CategoryResource::collection(
-                Category::search($request->input('search'))
-                    ->paginate(10)
-            ),
+            'Categories fetched successfully',
+            CategoryResource::collection($categories)
         );
     }
 
     public function store(CategoryRequest $request)
     {
-        $validated = $request->validated();
-
-        $category = Category::create($validated);
+        $category = app(CategoryService::class)
+            ->store($request->validated());
 
         return $this->success(
             'Storing Category Successful',
@@ -35,6 +38,8 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
+        $category->load('sub_categories');
+
         return $this->success(
             'Searching Category Successful',
             new CategoryResource($category)
@@ -43,14 +48,11 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, Category $category)
     {
-        $changes = DB::transaction(function () use ($request, $category) {
-            $changes = $this->resourceParser($request, $category);
-
-            return $changes;
-        });
+        $category = app(CategoryService::class)
+            ->update($category, $request->validated());
 
         return $this->success(
-            $changes ? 'Updating Category Successful' : 'No changes made.',
+            'Updating Category Successful',
             new CategoryResource($category)
         );
     }

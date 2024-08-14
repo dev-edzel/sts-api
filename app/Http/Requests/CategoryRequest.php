@@ -31,9 +31,13 @@ class CategoryRequest extends FormRequest
         return match ($this->method()) {
             'POST' => [
                 'name' => ['required', 'string'],
+                'sub_categories' => ['array'],
+                'sub_categories.*.name' => ['required', 'string'],
             ],
             default => [
                 'name' => ['nullable', 'string'],
+                'sub_categories' => ['array'],
+                'sub_categories.*.name' => ['nullable', 'string'],
             ],
         };
     }
