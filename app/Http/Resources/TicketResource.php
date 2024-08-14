@@ -14,24 +14,17 @@ class TicketResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $ticketInfo = TicketInfoResource::collection(
-            $this->whenLoaded('ticket_infos')
-        );
-
-        $ticketType = TicketTypeResource::collection(
-            $this->whenLoaded('ticket_types')
-        );
+        $category = new CategoryResource($this->whenLoaded('category'));
 
         return [
+            'id' => $this->id,
             'ticket_number' => $this->ticket_number,
-            'reference_no' => $ticketType,
-            'ticket_type' => $this->reference_no,
-            'ticket_types_id' => $this->ticket_types_id,
-            'category_id' => $this->category_id,
-            'sub_category_id' => $this->sub_category_id,
+            'reference_no' => $this->reference_no,
+            'ticket_type' => $this->ticket_type,
+            'category' => $category,
+            'ticket_info' => $this->ticket_info,
             'initiator' => $this->initiator,
             'status' => $this->status,
-            'ticket_info' => $ticketInfo
         ];
     }
 }

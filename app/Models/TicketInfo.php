@@ -13,7 +13,7 @@ class TicketInfo extends Model
     use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
-        'user_id',
+        'ticket_id',
         'email',
         'first_name',
         'middle_name',

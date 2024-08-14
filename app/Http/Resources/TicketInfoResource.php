@@ -21,6 +21,7 @@ class TicketInfoResource extends JsonResource
             'last_name' => $this->last_name,
             'address' => $this->address,
             'phone_number' => $this->phone_number,
+            'attachment' => $this->attachment ? url($this->attachment) : null,
         ];
     }
 }

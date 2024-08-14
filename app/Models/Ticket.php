@@ -32,7 +32,7 @@ class Ticket extends Model
 
     public function ticket_info(): HasOne
     {
-        return $this->hasOne(TicketInfo::class);
+        return $this->hasOne(TicketInfo::class, 'ticket_id');
     }
 
     public function category(): BelongsTo
@@ -47,7 +47,7 @@ class Ticket extends Model
 
     public function ticket_type(): BelongsTo
     {
-        return $this->belongsTo(TicketType::class);
+        return $this->belongsTo(TicketType::class, 'ticket_types_id');
     }
 
     public function toSearchableArray()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
+use App\Services\TicketService;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -13,20 +14,37 @@ class TicketController extends Controller
     {
         $search = $request->input('search');
 
-        $categories = Ticket::search($search)
+        $tickets = Ticket::search($search)
             ->query(fn($query) => $query->with([
-                'ticket_infos',
-                'ticket_types'
+                'ticket_info',
+                'ticket_type'
             ]))->paginate(10);
 
         return $this->success(
             'Tickets fetched successfully',
-            TicketResource::collection($categories)
+            TicketResource::collection($tickets)
         );
     }
 
     public function store(TicketRequest $request)
     {
-        //TODO STORING TICKET WITH INFO
+        $ticket = app(TicketService::class)
+            ->store($request->validated());
+
+        return $this->success(
+            'Storing Ticket Successful',
+            new TicketResource($ticket),
+            201
+        );
+    }
+
+    public function show(Ticket $ticket)
+    {
+        $ticket->load(['ticket_info', 'ticket_type']);
+
+        return $this->success(
+            'Searching Ticket Successful',
+            new TicketResource($ticket)
+        );
     }
 }
