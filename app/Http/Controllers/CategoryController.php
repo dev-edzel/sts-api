@@ -32,7 +32,8 @@ class CategoryController extends Controller
 
         return $this->success(
             'Storing Category Successful',
-            new CategoryResource($category)
+            new CategoryResource($category),
+            201
         );
     }
 

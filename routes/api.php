@@ -4,8 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     CategoryController,
-    SubCategoryController,
-    TicketTypeController
+    TicketTypeController,
+    TicketController
 };
 
 Route::get('/user', function (Request $request) {
@@ -24,8 +24,4 @@ Route::group(['prefix' => 'categories/trashed'], function () {
 });
 Route::resource('categories', CategoryController::class);
 
-Route::group(['prefix' => 'sub-categories/trashed'], function () {
-    Route::get('', [SubCategoryController::class, 'trashed']);
-    Route::get('/restore/{id}', [SubCategoryController::class, 'restore']);
-});
-Route::resource('sub-categories', SubCategoryController::class);
+Route::resource('tickets', TicketController::class);

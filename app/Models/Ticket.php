@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Ticket extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
         'ticket_number',
@@ -47,5 +48,13 @@ class Ticket extends Model
     public function ticket_type(): BelongsTo
     {
         return $this->belongsTo(TicketType::class);
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'ticket_number' => $this->ticket_number,
+            'reference_no' => $this->reference_no,
+        ];
     }
 }

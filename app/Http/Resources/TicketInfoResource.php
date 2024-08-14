@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class TicketInfoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,14 +14,13 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $subCategories = SubCategoryResource::collection(
-            $this->whenLoaded('sub_categories')
-        );
-
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'sub_categories' => $subCategories
+            'email' => $this->email,
+            'first_name' => $this->first_name,
+            'middle_name' => $this->middle_name,
+            'last_name' => $this->last_name,
+            'address' => $this->address,
+            'phone_number' => $this->phone_number,
         ];
     }
 }
