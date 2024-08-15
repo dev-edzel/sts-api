@@ -15,6 +15,7 @@ class TicketResource extends JsonResource
     public function toArray(Request $request): array
     {
         $category = new CategoryResource($this->whenLoaded('category'));
+        $ticketInfo = new TicketInfoResource($this->whenLoaded('ticket_info'));
 
         return [
             'id' => $this->id,
@@ -22,7 +23,7 @@ class TicketResource extends JsonResource
             'reference_no' => $this->reference_no,
             'ticket_type' => $this->ticket_type,
             'category' => $category,
-            'ticket_info' => $this->ticket_info,
+            'ticket_info' => $ticketInfo,
             'initiator' => $this->initiator,
             'status' => $this->status,
         ];

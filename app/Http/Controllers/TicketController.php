@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TicketRequest;
 use App\Http\Resources\TicketResource;
+use App\Jobs\QueueEmailVerification;
 use App\Models\Ticket;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
@@ -46,5 +47,25 @@ class TicketController extends Controller
             'Searching Ticket Successful',
             new TicketResource($ticket)
         );
+    }
+
+    public function otp(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $email = $request->input('email');
+
+        $otpData = $this->generateOTP();
+
+        $mailData = [
+            'otp' => $otpData['otp'],
+            'email' => $email,
+        ];
+
+        QueueEmailVerification::dispatch($mailData);
+
+        return $this->success('Sending OTP successful.', $otpData['hashed']);
     }
 }

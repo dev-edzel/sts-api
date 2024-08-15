@@ -50,7 +50,7 @@ class TicketRequest extends FormRequest
                 'ticket_infos.middle_name' => ['nullable', 'string'],
                 'ticket_infos.last_name' => ['required', 'string'],
                 'ticket_infos.address' => ['required', 'string'],
-                'ticket_infos.phone_number' => ['required', 'integer'],
+                'ticket_infos.phone_number' => ['required', 'string'],
                 'ticket_infos.subject' => ['nullable', 'string'],
                 'ticket_infos.concern' => ['nullable', 'string'],
                 'ticket_infos.attachment' => ['nullable', 'file', 'mimes:jpeg,png,pdf'],
@@ -71,7 +71,7 @@ class TicketRequest extends FormRequest
             ]
         };
     }
-    
+
 
     protected function failedValidation(Validator $validator)
     {

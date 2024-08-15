@@ -9,7 +9,7 @@ trait HandlesHttpResponses
     protected function success(string $message, mixed $data = null, int $statusCode = null): JsonResponse
     {
         return response()->json([
-            'success' => 'true',
+            'status' => 0,
             'message' => $message,
             'data' => $data ?? []
         ], $statusCode ?? 200);
@@ -18,7 +18,7 @@ trait HandlesHttpResponses
     protected function error(string $message, mixed $data = null, int $statusCode = null): JsonResponse
     {
         return response()->json([
-            'success' => 'false',
+            'status' => 1,
             'message' => $message,
             'data' => $data ?? []
         ], $statusCode ?? 400);

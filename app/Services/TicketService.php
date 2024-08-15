@@ -21,7 +21,7 @@ class TicketService
             if (isset($validated['ticket_infos']['attachment'])) {
                 $filePath = $validated['ticket_infos']['attachment']
                     ->store('public/attachments');
-                $validated['ticket_infos']['attachment'] = url($filePath);
+                $validated['ticket_infos']['attachment'] = basename($filePath);
             }
 
             $ticketInfoData = $validated['ticket_infos'];

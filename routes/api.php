@@ -25,3 +25,4 @@ Route::group(['prefix' => 'categories/trashed'], function () {
 Route::resource('categories', CategoryController::class);
 
 Route::resource('tickets', TicketController::class);
+Route::post('send-otp', [TicketController::class, 'otp']);

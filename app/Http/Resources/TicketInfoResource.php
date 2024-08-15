@@ -15,13 +15,16 @@ class TicketInfoResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'email' => $this->email,
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
             'address' => $this->address,
             'phone_number' => $this->phone_number,
-            'attachment' => $this->attachment ? url($this->attachment) : null,
+            'attachment' => $this->attachment
+                ? url("storage/attachments/{$this->attachment}")
+                : null,
         ];
     }
 }
