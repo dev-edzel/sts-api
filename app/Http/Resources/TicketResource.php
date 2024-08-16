@@ -14,18 +14,19 @@ class TicketResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $category = new CategoryResource($this->whenLoaded('category'));
         $ticketInfo = new TicketInfoResource($this->whenLoaded('ticket_info'));
 
         return [
             'id' => $this->id,
             'ticket_number' => $this->ticket_number,
             'reference_no' => $this->reference_no,
-            'ticket_type' => $this->ticket_type,
-            'category' => $category,
+            'merchant' => $this->merchant,
+            'category' => $this->category,
+            'sub_category' => $this->sub_category,
             'ticket_info' => $ticketInfo,
             'initiator' => $this->initiator,
             'status' => $this->status,
+            'otp_hashed' => $this->when(isset($this->otp_hashed), $this->otp_hashed),
         ];
     }
 }

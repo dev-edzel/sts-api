@@ -2,21 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\TicketType;
+use App\Models\Merchant;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TicketTypeSeeder extends Seeder
+class MerchantSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $data = config('seeder.ticket_types');
+        $data = config('seeder.merchants');
 
-        foreach ($data as $ticketType) {
-            TicketType::create($ticketType);
+        foreach ($data as $merchant) {
+            Merchant::create($merchant);
         }
     }
 }

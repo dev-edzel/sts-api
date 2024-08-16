@@ -5,44 +5,36 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
 
-class SubCategory extends Model
+class Faqs extends Model
 {
     use HasFactory, Searchable;
 
+    protected $table = 'faqs';
+
     protected $fillable = [
-        'name',
         'category_id',
-        'faqs_id'
+        'sub_category_id',
+        'question',
+        'answer'
     ];
-
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-    ];
-
-    public function ticket(): HasOne
-    {
-        return $this->hasOne(Category::class);
-    }
 
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function faqs(): HasMany
+    public function sub_category(): BelongsTo
     {
-        return $this->hasMany(Faqs::class);
+        return $this->belongsTo(SubCategory::class);
     }
 
     public function toSearchableArray()
     {
         return [
-            'name' => $this->name,
+            'questions' => $this->question,
+            'answers' => $this->answer
         ];
     }
 }

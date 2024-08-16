@@ -71,7 +71,7 @@
         <p>Hello,</p>
         <p>Your code is:</p>
         <div class="code">{{ $data['otp'] }}</div>
-        <p>Please use this code to verify your email address. The code is valid for 5 minutes.</p>
+        <p>Please use this code to verify your email address. The code is valid for 5 minutes. (Ref. No. {{ $data['ref_no'] }})</p>
         <p>Thank you for choosing our service!</p>
         <div class="footer">
             © 2024 Pisopay.com Inc. All rights reserved.

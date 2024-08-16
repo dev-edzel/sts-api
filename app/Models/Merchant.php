@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
-class TicketType extends Model
+class Merchant extends Model
 {
     use HasFactory, SoftDeletes, Searchable;
 

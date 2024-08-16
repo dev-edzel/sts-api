@@ -30,7 +30,7 @@ class TicketRequest extends FormRequest
         return match ($this->method()) {
             'POST' => [
                 'reference_no' => ['nullable', 'string'],
-                'ticket_types_id' => ['nullable', 'exists:ticket_types,id'],
+                'merchant_id' => ['nullable', 'exists:merchants,id'],
                 'category_id' => ['nullable', 'exists:categories,id'],
                 'sub_category_id' => ['nullable', 'exists:sub_categories,id'],
                 'status' => [

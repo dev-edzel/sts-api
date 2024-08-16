@@ -16,7 +16,7 @@ class Ticket extends Model
     protected $fillable = [
         'ticket_number',
         'reference_no',
-        'ticket_types_id',
+        'merchant_id',
         'category_id',
         'sub_category_id',
         'initiator',
@@ -42,12 +42,12 @@ class Ticket extends Model
 
     public function sub_category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(SubCategory::class);
     }
 
-    public function ticket_type(): BelongsTo
+    public function merchant(): BelongsTo
     {
-        return $this->belongsTo(TicketType::class, 'ticket_types_id');
+        return $this->belongsTo(Merchant::class, 'merchant_id');
     }
 
     public function toSearchableArray()

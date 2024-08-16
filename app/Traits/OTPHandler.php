@@ -13,12 +13,14 @@ trait OTPHandler
         $otp = strtoupper(Str::random(6));
         $ts = Carbon::now()->toDateTimeString();
         $hashed = hash_hmac('sha256', "{$otp}{$ts}", config('otp.secret'));
+        $refNo = strtoupper(Str::random(6));
 
         return [
             'otp' => $otp,
             'hashed' => [
                 'otp' => $hashed,
-                't' => $ts
+                't' => $ts,
+                'ref_no' => $refNo
             ]
         ];
     }

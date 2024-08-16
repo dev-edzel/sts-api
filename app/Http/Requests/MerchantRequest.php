@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
-class TicketTypeRequest extends FormRequest
+class MerchantRequest extends FormRequest
 {
     use HandlesHttpResponses;
 
@@ -33,7 +33,7 @@ class TicketTypeRequest extends FormRequest
                 'short_name' => [
                     'required',
                     'string',
-                    'unique:ticket_types,short_name'
+                    'unique:merchants,short_name'
                 ],
             ],
             default => [
@@ -41,7 +41,7 @@ class TicketTypeRequest extends FormRequest
                 'short_name' => [
                     'nullable',
                     'string',
-                    'unique:ticket_types,short_name'
+                    'unique:merchants,short_name'
                 ],
             ],
         };

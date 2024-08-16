@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OtpRequest;
 use App\Http\Requests\TicketRequest;
 use App\Http\Resources\TicketResource;
-use App\Jobs\QueueEmailVerification;
 use App\Models\Ticket;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class TicketController extends Controller
         $tickets = Ticket::search($search)
             ->query(fn($query) => $query->with([
                 'ticket_info',
-                'ticket_type'
+                'merchant'
             ]))->paginate(10);
 
         return $this->success(
@@ -41,31 +41,53 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket)
     {
-        $ticket->load(['ticket_info', 'ticket_type']);
+        $ticket->load(['ticket_info', 'merchant']);
 
         return $this->success(
             'Searching Ticket Successful',
             new TicketResource($ticket)
         );
     }
-
-    public function otp(Request $request)
+    public function verifyOtp(OtpRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
+        $validated = $request->validated();
+
+        $this->checkOTP(
+            $validated['otp'],
+            $validated['hashed']['otp'],
+            $validated['hashed']['t']
+        );
+
+        $ticket = Ticket::where('ticket_number', $validated['ticket_number'])
+            ->with(['ticket_info', 'merchant', 'category.sub_categories'])
+            ->firstOrFail();
+
+        return $this->success(
+            'Verified Successfully.',
+            new TicketResource($ticket)
+        );
+    }
+
+    public function checkStatus(Request $request)
+    {
+        $validated = $request->validate([
+            'ticket_number' => ['required', 'string']
         ]);
 
-        $email = $request->input('email');
+        $ticket = Ticket::where(
+            'ticket_number',
+            $validated['ticket_number']
+        )->first();
 
-        $otpData = $this->generateOTP();
+        if (!$ticket) {
+            return $this->error(
+                'Invalid Ticket Number',
+            );
+        }
 
-        $mailData = [
-            'otp' => $otpData['otp'],
-            'email' => $email,
-        ];
-
-        QueueEmailVerification::dispatch($mailData);
-
-        return $this->success('Sending OTP successful.', $otpData['hashed']);
+        return $this->success(
+            'Ticket status fetched successfully.',
+            new TicketResource($ticket)
+        );
     }
 }
