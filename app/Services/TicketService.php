@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Jobs\QueueEmailVerification;
+use App\Jobs\ProcessEmailVerification;
 use App\Models\Ticket;
 use App\Models\TicketInfo;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +15,7 @@ class TicketService
     public function store(array $validated): Ticket
     {
         return DB::transaction(function () use ($validated) {
-            $validated['status'] ??= 'open';
+            $validated['status_id'] ??= 1;
 
             $latestTicket = Ticket::latest('id')->first();
             $nextId = $latestTicket ? $latestTicket->id + 1 : 1;
@@ -47,7 +47,7 @@ class TicketService
                     'ticket_number' => $ticketNumber,
                 ];
 
-                QueueEmailVerification::dispatch($mailData);
+                ProcessEmailVerification::dispatch($mailData);
 
                 $ticket->mail_data = $mailData;
                 $ticket->otp_hashed = $hashedOtp;
@@ -56,7 +56,8 @@ class TicketService
             return $ticket->load(
                 'merchant',
                 'ticket_info',
-                'category.sub_categories'
+                'category.sub_categories',
+                'status'
             );
         });
     }

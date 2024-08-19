@@ -85,9 +85,13 @@ class TicketController extends Controller
             );
         }
 
+        $ticketStatus = [
+            'status' => $ticket->status
+        ];
+
         return $this->success(
             'Ticket status fetched successfully.',
-            new TicketResource($ticket)
+            $ticketStatus
         );
     }
 }

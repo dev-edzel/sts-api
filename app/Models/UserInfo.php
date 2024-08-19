@@ -17,6 +17,7 @@ class UserInfo extends Model
         'middle_name',
         'last_name',
         'phone_number',
+        'designation',
         'avatar'
     ];
 

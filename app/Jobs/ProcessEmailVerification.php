@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class QueueEmailVerification implements ShouldQueue
+class ProcessEmailVerification implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -33,6 +33,7 @@ class QueueEmailVerification implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->data['email'])->send(new EmailVerificationMailer($this->data));
+        Mail::to($this->data['email'])
+            ->send(new EmailVerificationMailer($this->data));
     }
 }

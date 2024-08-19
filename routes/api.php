@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     FaqsController,
     SubCategoryController,
     MerchantController,
+    StatusController,
     TicketController
 };
 
@@ -28,9 +29,10 @@ Route::resource('categories', CategoryController::class);
 Route::resource('sub-categories', SubCategoryController::class);
 
 Route::resource('tickets', TicketController::class);
-// Route::post('send-otp', [TicketController::class, 'otp']);
+Route::resource('ticket-statuses', StatusController::class);
+
 Route::post('verify-otp', [TicketController::class, 'verifyOtp']);
 
-Route::get('ticket-status', [TicketController::class, 'checkStatus']);
+Route::post('ticket-status', [TicketController::class, 'checkStatus']);
 
 Route::resource('faqs', FaqsController::class);

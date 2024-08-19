@@ -350,5 +350,35 @@ return [
                 ]
             ],)
         ],
+    ],
+    'statuses' => [
+        [
+            'name' => 'open',
+            'description' => 'The ticket has been created and is awaiting assignment or action.'
+        ],
+        [
+            'name' => 'in_progress',
+            'description' => 'The ticket has been assigned and is being worked on.'
+        ],
+        [
+            'name' => 'pending',
+            'description' => 'The ticket is waiting for input or action from someone else, such as the customer or another team.'
+        ],
+        [
+            'name' => 'resolved',
+            'description' => 'The issue has been addressed and the ticket is considered complete.'
+        ],
+        [
+            'name' => 'on_hold',
+            'description' => 'The ticket is temporarily paused for a specific reason.'
+        ],
+        [
+            'name' => 'escalated',
+            'description' => 'The ticket has been flagged for urgent attention or has been escalated to a higher level of support.'
+        ],
+        [
+            'name' => 're_opened',
+            'description' => 'A previously resolved ticket has been reopened due to a recurring or unresolved issue.'
+        ],
     ]
 ];

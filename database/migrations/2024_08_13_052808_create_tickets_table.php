@@ -10,6 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        Schema::create('statuses', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('ticket_number');
@@ -17,13 +25,14 @@ return new class extends Migration {
             $table->unsignedBigInteger('merchant_id');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('sub_category_id');
-            $table->string('status')->default('open');
+            $table->unsignedBigInteger('status_id')->default(1);
             $table->string('initiator')->nullable();
             $table->timestamp('resolved_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('merchant_id')->references('id')->on('merchants');
+            $table->foreign('status_id')->references('id')->on('statuses');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('sub_category_id')->references('id')->on('sub_categories');
         });
@@ -52,6 +61,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::dropIfExists('statuses');
         Schema::dropIfExists('tickets');
         Schema::dropIfExists('ticket_infos');
     }

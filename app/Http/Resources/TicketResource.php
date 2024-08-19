@@ -26,7 +26,10 @@ class TicketResource extends JsonResource
             'ticket_info' => $ticketInfo,
             'initiator' => $this->initiator,
             'status' => $this->status,
-            'otp_hashed' => $this->when(isset($this->otp_hashed), $this->otp_hashed),
+            'otp_hashed' => $this->when(
+                isset($this->otp_hashed),
+                $this->otp_hashed
+            ),
         ];
     }
 }

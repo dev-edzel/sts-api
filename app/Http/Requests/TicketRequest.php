@@ -33,18 +33,7 @@ class TicketRequest extends FormRequest
                 'merchant_id' => ['nullable', 'exists:merchants,id'],
                 'category_id' => ['nullable', 'exists:categories,id'],
                 'sub_category_id' => ['nullable', 'exists:sub_categories,id'],
-                'status' => [
-                    'nullable',
-                    Rule::in([
-                        'open', // The ticket has been created and is awaiting assignment or action.
-                        'in_progress', // The ticket has been assigned and is being worked on.
-                        'pending', // The ticket is waiting for input or action from someone else, such as the customer or another team.
-                        'resolved', // The issue has been addressed and the ticket is considered complete.
-                        'on_hold', // The ticket is temporarily paused for a specific reason.
-                        'escalated', // The ticket has been flagged for urgent attention or has been escalated to a higher level of support.
-                        're_opened' // A previously resolved ticket has been reopened due to a recurring or unresolved issue.
-                    ])
-                ],
+                'status' => ['nullable', 'exists:statuses,id'],
                 'ticket_infos.email' => ['required', 'string', 'email'],
                 'ticket_infos.first_name' => ['required', 'string'],
                 'ticket_infos.middle_name' => ['nullable', 'string'],
@@ -56,18 +45,7 @@ class TicketRequest extends FormRequest
                 'ticket_infos.attachment' => ['nullable', 'file', 'mimes:jpeg,png,pdf'],
             ],
             default => [
-                'status' => [
-                    'nullable',
-                    Rule::in([
-                        'open', // The ticket has been created and is awaiting assignment or action.
-                        'in_progress', // The ticket has been assigned and is being worked on.
-                        'pending', // The ticket is waiting for input or action from someone else, such as the customer or another team.
-                        'resolved', // The issue has been addressed and the ticket is considered complete.
-                        'on_hold', // The ticket is temporarily paused for a specific reason.
-                        'escalated', // The ticket has been flagged for urgent attention or has been escalated to a higher level of support.
-                        're_opened' // A previously resolved ticket has been reopened due to a recurring or unresolved issue.
-                    ])
-                ],
+                'status' => ['nullable', 'exists:statuses,id'],
             ]
         };
     }

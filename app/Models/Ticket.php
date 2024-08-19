@@ -19,8 +19,9 @@ class Ticket extends Model
         'merchant_id',
         'category_id',
         'sub_category_id',
+        'status_id',
         'initiator',
-        'status'
+        'status_id'
     ];
 
     protected $hidden = [
@@ -33,6 +34,11 @@ class Ticket extends Model
     public function ticket_info(): HasOne
     {
         return $this->hasOne(TicketInfo::class, 'ticket_id');
+    }
+
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(Status::class);
     }
 
     public function category(): BelongsTo
