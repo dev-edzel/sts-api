@@ -16,7 +16,7 @@ class FaqsResource extends JsonResource
     {
         return [
             'category' => $this->category,
-            'sub_category' => $this->sub_category->only,
+            'sub_category' => $this->sub_category,
             'question' => $this->question,
             'answers' => json_decode($this->answers, true)
         ];

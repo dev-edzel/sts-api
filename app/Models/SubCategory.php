@@ -16,7 +16,6 @@ class SubCategory extends Model
     protected $fillable = [
         'name',
         'category_id',
-        'faqs_id'
     ];
 
     protected $hidden = [
