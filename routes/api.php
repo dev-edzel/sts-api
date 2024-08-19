@@ -3,12 +3,14 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    AuthController,
     CategoryController,
     FaqsController,
     SubCategoryController,
     MerchantController,
     StatusController,
-    TicketController
+    TicketController,
+    UserController
 };
 
 Route::get('/user', function (Request $request) {
@@ -36,3 +38,9 @@ Route::post('verify-otp', [TicketController::class, 'verifyOtp']);
 Route::post('ticket-status', [TicketController::class, 'checkStatus']);
 
 Route::resource('faqs', FaqsController::class);
+
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+Route::resource('users', UserController::class);

@@ -2,10 +2,16 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\HandlesHttpResponses;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
+
 
 class UserRequest extends FormRequest
 {
+    use HandlesHttpResponses;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -30,9 +36,29 @@ class UserRequest extends FormRequest
                 'user_info.middle_name' => ['nullable', 'string'],
                 'user_info.last_name' => ['required', 'string'],
                 'user_info.phone_number' => ['required', 'string'],
-                'user_info.avatar' => ['required', 'image'],
+                'user_info.avatar' => ['nullable', 'image'],
             ],
-            default => []
+            default => [
+                'username' => ['nullable', 'string', 'unique:users,username'],
+                'email' => ['nullable', 'string', 'email', 'unique:users,email'],
+                'password' => ['nullable', 'min:8'],
+                'user_info.first_name' => ['nullable', 'string'],
+                'user_info.middle_name' => ['nullable', 'string'],
+                'user_info.last_name' => ['nullable', 'string'],
+                'user_info.phone_number' => ['nullable', 'string'],
+                'user_info.avatar' => ['nullable', 'image'],
+            ]
         };
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            $this->error(
+                'Invalid Data',
+                $validator->errors(),
+                Response::HTTP_BAD_REQUEST
+            )
+        );
     }
 }

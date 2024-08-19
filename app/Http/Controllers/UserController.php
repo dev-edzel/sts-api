@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,5 +22,10 @@ class UserController extends Controller
             'Users fetched successfully',
             UserResource::collection($users)
         );
+    }
+
+    public function store(UserRequest $request)
+    {
+        //TODO USER/USER INFO
     }
 }
