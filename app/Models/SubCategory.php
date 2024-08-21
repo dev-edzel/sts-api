@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Faqs\Question;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,9 +34,9 @@ class SubCategory extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function faqs(): HasMany
+    public function questions(): HasMany
     {
-        return $this->hasMany(Faqs::class);
+        return $this->hasMany(Question::class);
     }
 
     public function toSearchableArray()

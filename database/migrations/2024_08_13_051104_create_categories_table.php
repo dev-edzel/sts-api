@@ -26,18 +26,6 @@ return new class extends Migration
 
             $table->foreign('category_id')->references('id')->on('categories');
         });
-
-        Schema::create('faqs', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('sub_category_id');
-            $table->string('question');
-            $table->json('answers');
-            $table->timestamps();
-
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('sub_category_id')->references('id')->on('sub_categories');
-        });
     }
 
     /**
@@ -47,6 +35,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('categories');
         Schema::dropIfExists('sub_categories');
-        Schema::dropIfExists('faqs');
     }
 };

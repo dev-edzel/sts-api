@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Faqs;
 
+use App\Http\Resources\SubCategoryResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,11 +15,14 @@ class FaqsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $subCategories = SubCategoryResource::collection(
+            $this->whenLoaded('sub_categories')
+        );
+
         return [
-            'category' => $this->category,
-            'sub_category' => $this->sub_category,
-            'question' => $this->question,
-            'answers' => json_decode($this->answers, true)
+            'id' => $this->id,
+            'name' => $this->name,
+            'sub_categories' => $subCategories,
         ];
     }
 }

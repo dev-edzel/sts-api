@@ -31,7 +31,10 @@ class AuthController extends Controller
 
         $user = User::where('username', $validated['username'])->first();
 
-        if (!$user || !Hash::check($validated['password'], $user['password'])) {
+        if (!$user || !Hash::check(
+            $validated['password'],
+            $user['password']
+        )) {
             return $this->error('The provided credentials are incorrect');
         }
 

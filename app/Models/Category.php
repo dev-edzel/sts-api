@@ -33,11 +33,6 @@ class Category extends Model
         return $this->hasMany(SubCategory::class);
     }
 
-    public function faq(): HasOne
-    {
-        return $this->hasOne(Faqs::class);
-    }
-
     public function toSearchableArray()
     {
         return [

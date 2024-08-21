@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\FaqsResource;
-use App\Models\Faqs;
+use App\Http\Resources\Faqs\FaqsResource;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class FaqsController extends Controller
@@ -12,22 +12,14 @@ class FaqsController extends Controller
     {
         $search = $request->input('search');
 
-        $faqs = Faqs::search($search)
+        $categories = Category::search($search)
             ->query(fn($query) => $query->with([
-                'category',
+                'sub_categories.questions.answers'
             ]))->paginate(10);
 
         return $this->success(
-            'Faqs fetched successfully',
-            FaqsResource::collection($faqs)
-        );
-    }
-
-    public function show(Faqs $faq)
-    {
-        return $this->success(
-            'Searching Faq Successful',
-            new FaqsResource($faq)
+            'FAQs retrieved successfully',
+            FaqsResource::collection($categories)
         );
     }
 }
