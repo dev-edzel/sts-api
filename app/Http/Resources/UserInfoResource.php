@@ -19,7 +19,6 @@ class UserInfoResource extends JsonResource
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
             'phone_number' => $this->phone_number,
-            'designation' => $this->designation,
             'avatar' => $this->avatar
                 ? url("storage/avatars/{$this->avatar}")
                 : null,
