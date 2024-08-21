@@ -46,3 +46,6 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanct
 
 Route::resource('users', UserController::class);
 Route::resource('user-info', UserInfoController::class);
+
+Route::get('metrics-status', [TicketController::class, 'metricsForStatus']);
+Route::get('metrics-merchant', [TicketController::class, 'metricsForMerchant']);

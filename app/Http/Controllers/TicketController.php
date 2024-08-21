@@ -8,6 +8,7 @@ use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
@@ -92,6 +93,40 @@ class TicketController extends Controller
         return $this->success(
             'Ticket status fetched successfully.',
             $ticketStatus
+        );
+    }
+
+    public function metricsForStatus()
+    {
+        $metrics = DB::table('statuses')
+            ->leftJoin('tickets', 'statuses.id', '=', 'tickets.status_id')
+            ->select(
+                'statuses.name as status',
+                DB::raw('count(tickets.id) as total_tickets')
+            )
+            ->groupBy('statuses.name')
+            ->get();
+
+        return $this->success(
+            'Ticket Status Metrics fetched successfully.',
+            $metrics
+        );
+    }
+
+    public function metricsForMerchant()
+    {
+        $metrics = DB::table('merchants')
+            ->leftJoin('tickets', 'merchants.id', '=', 'tickets.merchant_id')
+            ->select(
+                'merchants.name as merchant',
+                DB::raw('count(tickets.id) as total_tickets')
+            )
+            ->groupBy('merchants.name')
+            ->get();
+
+        return $this->success(
+            'Ticket Merchant Metrics fetched successfully.',
+            $metrics
         );
     }
 }

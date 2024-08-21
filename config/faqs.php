@@ -79,8 +79,12 @@ return [
             'sub_category_id' => 7,
         ],
         [
-            'question' => "How do I initiate a password reset request?",
-            'sub_category_id' => 7,
+            'question' => "How do I create a strong new password?",
+            'sub_category_id' => 8,
+        ],
+        [
+            'question' => "What if I suspect someone else has reset my password without my authorization?",
+            'sub_category_id' => 8,
         ],
     ],
 
@@ -300,6 +304,14 @@ return [
         [
             'answer' => "If you can't find the reset option, contact the service provider's customer support for assistance.",
             'question_id' => 20,
+        ],
+        [
+            'answer' => "Use a combination of uppercase and lowercase letters, numbers, and symbols. Avoid using easily guessable information like your name or birthdate. Consider using a password manager to generate and store complex passwords.",
+            'question_id' => 21,
+        ],
+        [
+            'answer' => "Contact the service's customer support immediately. They can help you secure your account and investigate any unauthorized activity.",
+            'question_id' => 21,
         ],
     ],
 

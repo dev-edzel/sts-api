@@ -36,4 +36,14 @@ class UserService
             return new UserResource($user);
         });
     }
+
+    // public function getStatusMetrics()
+    // {
+    //     TODO
+    // }
+
+    // public function getStatusMetrics()
+    // {
+    //     TODO
+    // }
 }

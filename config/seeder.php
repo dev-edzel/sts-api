@@ -71,5 +71,5 @@ return [
             'name' => 're_opened',
             'description' => 'A previously resolved ticket has been reopened due to a recurring or unresolved issue.'
         ],
-    ]
+    ],
 ];
