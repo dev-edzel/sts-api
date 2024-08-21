@@ -10,7 +10,8 @@ use App\Http\Controllers\{
     MerchantController,
     StatusController,
     TicketController,
-    UserController
+    UserController,
+    UserInfoController
 };
 
 Route::get('/user', function (Request $request) {
@@ -44,3 +45,4 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::resource('users', UserController::class);
+Route::resource('user-info', UserInfoController::class);

@@ -42,11 +42,6 @@ class UserRequest extends FormRequest
                 'username' => ['nullable', 'string', 'unique:users,username'],
                 'email' => ['nullable', 'string', 'email', 'unique:users,email'],
                 'password' => ['nullable', 'min:8'],
-                'user_info.first_name' => ['nullable', 'string'],
-                'user_info.middle_name' => ['nullable', 'string'],
-                'user_info.last_name' => ['nullable', 'string'],
-                'user_info.phone_number' => ['nullable', 'string'],
-                'user_info.avatar' => ['nullable', 'image'],
             ]
         };
     }
